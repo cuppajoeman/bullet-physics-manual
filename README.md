@@ -9,6 +9,8 @@ Throughout the wiki, whenever we will reference the official api: https://pybull
 
 ## why
 As of right now there are a few main ways to get started with bullet physics:
+* bullet physics official docs:
+   * https://github.com/bulletphysics/bullet3/tree/master/docs
 * examples in bullet's github repository
   * learn by reverse engineering, through you might make some wrong assumptions this way
 * kodeco's site: https://www.kodeco.com/2606-bullet-physics-tutorial-getting-started
