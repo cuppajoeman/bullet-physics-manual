@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>building</title>
-</head>
-<body>
-
-<h1>building</h1>
+/** \page Building
 
 <h2>linux</h2>
 <p>
@@ -22,6 +14,5 @@
     </code>
 </pre>
 
+*/
 
-</body>
-</html>

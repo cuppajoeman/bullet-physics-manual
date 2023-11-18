@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>basics</title>
-</head>
-<body>
+/** \page Basics
+
 <h1>basics</h1>
 
 <h2>expected knowledge</h2>
@@ -85,6 +80,10 @@
 
 <h4>constraints</h4>
 
+<p>
+    TODO
+</p>
+
 
 <h2>back to bullet</h2>
 
@@ -115,5 +114,4 @@ This translates into the following code:
     On the next lines we can see how bullet deals with time through the <code>stepSimulation(...)</code> function call
 </p>
 
-</body>
-</html>
+*/
