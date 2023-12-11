@@ -1,18 +1,52 @@
 /** \page Building
 
-<h2>linux</h2>
-<p>
-    A simple way to build this project is with cmake, clone the bullet repository, cd into the root of the project and run:
-</p>
+\section Intro
 
-<pre>
-    <code>
-        mkdir my_build
-        cmake -S . -B my_build
-        cd my_build
-        cmake --build .
-    </code>
-</pre>
+https://stackoverflow.com/questions/10358745/how-to-use-libraries
 
+\section Linux
+
+\subsection using-bullet-directly Using Bullet Directly
+
+If you want to use bullet for the purpose of installing it on your computer from source, or to try out the examples through the example browser, then you want to build the project directly.
+
+A simple way to do this is with cmake, clone the bullet repository, cd into the root of it and run 
+
+\code
+mkdir my_build
+cmake -S . -B my_build
+cd my_build
+cmake --build .
+\endcode
+
+\subsection using-bullet-as-a-library Using Bullet as a Library
+
+Alternatively you might want to use Bullet as a library in your own programs, for example if you're desinging a game and you want to add physics.
+
+Start in an empty directory and create the directory `external_libraries` or something along those lines, inside of this directory add bullet as a submodule, if you're not yet familiar with how submodules work, to sum it up they allow you to add another directories as versioned packages and git will not store the files directly.
+
+For simplicity we will assume you are running linux and using cmake, in this case we just have to set up the following CMakeLists.txt file like so:
+
+\code
+cmake_minimum_required(VERSION 3.10)
+
+project(bullet_as_library)
+
+include_directories(external_libraries/bullet3/src) # (1)
+add_subdirectory(external_libraries/bullet3) # (2)
+
+add_executable(bullet_as_library bal.cpp) 
+
+target_link_libraries(bullet_as_library BulletDynamics BulletCollision LinearMath) # (3)
+\endcode
+
+This won't be a tutorial on how cmake works, but we'll mention a few things:
+
+1. adds the src directory as the include directory, this means that when you write something like `#include "btBulletDynamicsCommon.h"` cpp knows where to find this file. 
+2. tells cmake to also build bullet when we build this directory
+3. tells the linker to link the following cmake targets against our project
+
+If you're curious about how I knew what the names were for those libraries, look at the structure of the src file in Bullet, you'll find directories with similar names, each of which contain a `CMakeLists.txt` file and inside you'll find a line like this `ADD_LIBRARY(BulletDynamics ${BulletDynamics_SRCS} ${BulletDynamics_HDRS})` which defines that as a cmake target for us to reference later on. Also note that the order matters for some reason, [TODO: put reason it matters here], I believe it has to do with this: https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc
+
+With that set up, you can now move on to the basics section, in the root of your project dir you can now run `cmake -S . -B build` and `cmake --build build` to compile your code.
 */
-
