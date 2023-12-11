@@ -1,0 +1,81 @@
+/** \page static_map Static Map
+
+\section Introduction
+
+A common task when working with a physics simulation is to have some sort of fixed map, this comes up in most simulations that have gravity so that at least your objects will not just fall forever.
+
+For basic platforms feel free to use any of the built in collision shapes, but in most cases your map may be designed in a 3rd party program such as blender.
+
+\section btBVHTriangleMeshShape
+
+When working with arbitrary geometry like this, the class you'll want to use is \c btBvhTriangleMeshShape, breaking the name of this function down we can see that we first have Bvh, which stands for "Bounding volume hierarchy", here's a quick description pulled from [wikipedia](https://en.wikipedia.org/wiki/Bounding_volume_hierarchy):
+
+> A bounding volume hierarchy (BVH) is a tree structure on a set of geometric objects. All geometric objects, which form the leaf nodes of the tree, are wrapped in bounding volumes
+
+<a title="Schreiberx, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Example_of_bounding_volume_hierarchy.svg"><img width="512" alt="Example of bounding volume hierarchy" src="Example_of_bounding_volume_hierarchy_dark_friendly.png"></a>
+
+The next part of the name is [Triangle Mesh](https://en.wikipedia.org/wiki/Triangle_mesh).
+
+At this point the name of this function should tell that you that when you use this class you'll have an internal BVH representation for acceleration purposes, it builds this acceleration structure from 
+
+\section loading_data Loading in Data
+
+\subsection adding_triangles_manually Loading Triangles Manually
+
+Focusing on the signature for this function, we can see that it expects a `btStridingMeshInterface`, which mentions that that is an "interface class for high performance generic access to triangle meshes", if you don't already know, an interface class is one that's not meant to be initialized. 
+Taking a look at it's inheritance diagram you'll be able to find subclasses that actually provide an implementation for this concept.
+
+The class we'll first focus our attention on is `btTriangleMesh`. The general process of using a `btTriangleMesh` is like this:
+-# create a new `btTriangleMesh`
+-# create vertices of triangles add them to the mesh
+-# create a `btCollisionShape` with `btBvhTriangleMeshShape` and pass in the triangle mesh we've built up in the previous steps
+-# set up a rigid body with our `btCollisionShape`
+
+A sample interaction could look like this:
+
+\code{.cpp}
+// 1
+btVector3 vertex1, vertex2, vertex3, vertex4;
+btTriangleMesh* triangleMeshTerrain = new btTriangleMesh();
+
+// 2 create flat mesh made up of 10x10 squares
+for (int i = -250; i < 250; i = i + 10) {
+    for (int j = -250; j < 250; j = j + 10) {
+
+		// vertices of a square width side lengths of 10
+        vertex1 = btVector3(i, 0.0f, j);
+        vertex2 = btVector3(i + 10.0f, 0.0f, j);
+        vertex3 = btVector3(i + 10.0f, 0.0f, j + 10.0f);
+        vertex4 = btVector3(i, 0.0f, j + 10.0f);
+
+		// add the two halfs of the square
+        triangleMeshTerrain->addTriangle(vertex1, vertex2, vertex3);
+        triangleMeshTerrain->addTriangle(vertex1, vertex3, vertex4);
+    }
+}
+
+// 3
+btCollisionShape* collisionShapeTerrain = new btBvhTriangleMeshShape(triangleMeshTerrain, true);
+
+// 4
+btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -15, 0)));
+
+btRigidBody::btRigidBodyConstructionInfo rigidBodyConstructionInfo(0.0f, motionState, collisionShapeTerrain, btVector3(0, 0, 0));
+btRigidBody* rigidBodyTerrain = new btRigidBody(rigidBodyConstructionInfo);
+rigidBodyTerrain->setFriction(btScalar(0.9));
+
+m_dynamicsWorld->addRigidBody(rigidBodyTerrain);
+\endcode
+
+\subsection obj_files Obj Files
+
+While programatically creating collision shapes can work, we'll need a way to load in arbitrary vertex information so that we can load in assets created by artists and files created in software such as obj files.
+
+Usually you'll load in and parse your data external program or file
+
+
+
+
+
+*/
+

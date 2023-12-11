@@ -1,0 +1,52 @@
+/** \page Integrating OpenGL
+
+After you've read about the basics of how bullet physics works, you can run your simulation, although it would be great to see what's going on inside of our physics simulation.
+
+Bullet integrates nicely with opengl which is an interface for interacting with your graphics cards, if you're entirely new to opengl, I recommend going through the tutorials you can find on learnopengl.com or by looking at glfw's example.
+
+We won't be going into the specifics of how opengl works, but the main thing is that we need three main transformations for us to human vision and motion of objects, they are the local_to_world, world_to_camera, and the camera_to_clip transformations.
+
+These transformations are executed in the order specified above, so first we have an object like a scoccer ball that has it's origin centered at the middle of the ball, perhaps the soccer ball has been kicked by a player in our game and is moving along a parabolic arc, at a specific moment in time, we know where it's position should be in 3d space we can transform our soccer balls origin to that position by using the local_to_world transformation.
+
+The camera is also at another position in space, and since we want to view things from the camera's perspective we can also consider the camera as the origin, to do this, we have to apply the world_to_camera transformation, and at that point we apply perspective through the camera_to_clip transformation.
+
+With all the transformations out of the way, we can now see how bullet physics can work with OpenGL, so given a physics simulation, we can iterate though every object grab it's local_to_world transformation, which moves the object to the correct location as specified by bullet physics, and then draw it at that location.
+
+\code{.cpp}
+// render collsion shapes
+for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--) {
+	btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[j];
+	btRigidBody* body = btRigidBody::upcast(obj);
+	btTransform transform;
+
+	if (body && body->getMotionState()) {
+		body->getMotionState()->getWorldTransform(transform);
+	} else {
+		transform = obj->getWorldTransform();
+	}
+
+	// convert the btTransform into the GLM matrix using 'glm::value_ptr'
+	glm::mat4 model_matrix;
+	transform.getOpenGLMatrix(glm::value_ptr(model_matrix));
+
+	// model-view-projection
+	glm::mat4 mvp_mat = g_proj_matrix * g_view_matrix * model_matrix;
+
+	if (strcmp((obj->getCollisionShape())->getName(), "Box") == 0)
+	{
+		glUniform3fv(ColorID, 1, glm::value_ptr(albedoArray[j % 3]));
+
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, glm::value_ptr(mvp_mat));
+		myBox.render();
+	}
+	else if (strcmp((obj->getCollisionShape())->getName(), "SPHERE") == 0)
+	{
+		glUniform3fv(ColorID, 1, glm::value_ptr(albedoArray[j % 3]));
+
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, glm::value_ptr(mvp_mat));
+		mySphere.render();
+	}
+}
+\endcode
+
+*/
