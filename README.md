@@ -23,3 +23,5 @@ As of right now there are a few main ways to get started with bullet physics:
   * no longer updated, hard to find unless you know it exists, not publicly editable
 
 Taking a look at this list, the first thing we can notice is that there are is that there are pdf's, forums, commentaries, videos, api's all scattered about without much organization
+
+
