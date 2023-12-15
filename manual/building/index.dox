@@ -49,4 +49,16 @@ This won't be a tutorial on how cmake works, but we'll mention a few things:
 If you're curious about how I knew what the names were for those libraries, look at the structure of the src file in Bullet, you'll find directories with similar names, each of which contain a `CMakeLists.txt` file and inside you'll find a line like this `ADD_LIBRARY(BulletDynamics ${BulletDynamics_SRCS} ${BulletDynamics_HDRS})` which defines that as a cmake target for us to reference later on. Also note that the order matters for some reason, [TODO: put reason it matters here], I believe it has to do with this: https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc
 
 With that set up, you can now move on to the basics section, in the root of your project dir you can now run `cmake -S . -B build` and `cmake --build build` to compile your code.
+
+
+\subsubsection building-what-you-need Building What You need
+
+You might have noticed that during your build process we built many things, including tests and examples, there are a few reasons you might not want to do this.
+
+First off, while the above example works fine, if you're bringing bullet into an existing codebase, you may run into errors when compiling the examples along with your code because bullet provides third party libraries in the examples, which might overwrite packages that you have, for example I had a glfw project that used glad, and in the examples it also provided an instance of glad, but I got an error saying it that the gladLoader function call was undefined. 
+
+Moreover, there is no reason to build examples or to do tests if your goal is to simply use bullet as a third party library as it unessesarily complicates the build and takes longer. 
+
+At the moment when we run `add_submodule(external_libraries/bullet3/src)` it will recursively add any other directories that also contain `CMakeLists.txt` in them, and if you take a look at the code base you will find many such instances. Therefore an easy way to not build these cmake targets is by renaming the `CMakeLists.txt` to something like `ignore_CMakeLists.txt`, then go into the examples and test directory and do that to both `CMakeLists.txt` you encounter, when you build the library alongside your project you will not build the extraneous targets.
+
 */

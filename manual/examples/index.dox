@@ -1,0 +1,243 @@
+/** \page Examples
+
+A great way to understand bullet physics is through it's examples, I highly recommend building the project directly and running the example browser as you'll be able to look at the source code and then see what it produces.
+
+\section basic-example Basic Example
+
+The "Basic Example"'s source code is located at /examples/BasicDemo/BasicExample.cpp, let's list the contents here for simplicity
+
+\code{.cpp}
+/*
+Bullet Continuous Collision Detection and Physics Library
+Copyright (c) 2015 Google Inc. http://bulletphysics.org
+
+This software is provided 'as-is', without any express or implied warranty.
+In no event will the authors be held liable for any damages arising from the use of this software.
+Permission is granted to anyone to use this software for any purpose, 
+including commercial applications, and to alter it and redistribute it freely, 
+subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+*/
+
+#include "BasicExample.h"
+
+#include "btBulletDynamicsCommon.h"
+#define ARRAY_SIZE_Y 5
+#define ARRAY_SIZE_X 5
+#define ARRAY_SIZE_Z 5
+
+#include "LinearMath/btVector3.h"
+#include "LinearMath/btAlignedObjectArray.h"
+
+#include "../CommonInterfaces/CommonRigidBodyBase.h"
+
+struct BasicExample : public CommonRigidBodyBase
+{
+	BasicExample(struct GUIHelperInterface* helper)
+		: CommonRigidBodyBase(helper)
+	{
+	}
+	virtual ~BasicExample() {}
+	virtual void initPhysics();
+	virtual void renderScene();
+	void resetCamera()
+	{
+		float dist = 4;
+		float pitch = -35;
+		float yaw = 52;
+		float targetPos[3] = {0, 0, 0};
+		m_guiHelper->resetCamera(dist, yaw, pitch, targetPos[0], targetPos[1], targetPos[2]);
+	}
+};
+
+void BasicExample::initPhysics()
+{
+	m_guiHelper->setUpAxis(1);
+
+	createEmptyDynamicsWorld();
+	//m_dynamicsWorld->setGravity(btVector3(0,0,0));
+	m_guiHelper->createPhysicsDebugDrawer(m_dynamicsWorld);
+
+	if (m_dynamicsWorld->getDebugDrawer())
+		m_dynamicsWorld->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawWireframe + btIDebugDraw::DBG_DrawContactPoints);
+
+	///create a few basic rigid bodies
+	btBoxShape* groundShape = createBoxShape(btVector3(btScalar(50.), btScalar(50.), btScalar(50.)));
+
+	//groundShape->initializePolyhedralFeatures();
+	//btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,1,0),50);
+
+	m_collisionShapes.push_back(groundShape);
+
+	btTransform groundTransform;
+	groundTransform.setIdentity();
+	groundTransform.setOrigin(btVector3(0, -50, 0));
+
+	{
+		btScalar mass(0.);
+		createRigidBody(mass, groundTransform, groundShape, btVector4(0, 0, 1, 1));
+	}
+
+	{
+		//create a few dynamic rigidbodies
+		// Re-using the same collision is better for memory usage and performance
+
+		btBoxShape* colShape = createBoxShape(btVector3(.1, .1, .1));
+
+		//btCollisionShape* colShape = new btSphereShape(btScalar(1.));
+		m_collisionShapes.push_back(colShape);
+
+		/// Create Dynamic Objects
+		btTransform startTransform;
+		startTransform.setIdentity();
+
+		btScalar mass(1.f);
+
+		//rigidbody is dynamic if and only if mass is non zero, otherwise static
+		bool isDynamic = (mass != 0.f);
+
+		btVector3 localInertia(0, 0, 0);
+		if (isDynamic)
+			colShape->calculateLocalInertia(mass, localInertia);
+
+		for (int k = 0; k < ARRAY_SIZE_Y; k++)
+		{
+			for (int i = 0; i < ARRAY_SIZE_X; i++)
+			{
+				for (int j = 0; j < ARRAY_SIZE_Z; j++)
+				{
+					startTransform.setOrigin(btVector3(
+						btScalar(0.2 * i),
+						btScalar(2 + .2 * k),
+						btScalar(0.2 * j)));
+
+					createRigidBody(mass, startTransform, colShape);
+				}
+			}
+		}
+	}
+
+	m_guiHelper->autogenerateGraphicsObjects(m_dynamicsWorld);
+}
+
+void BasicExample::renderScene()
+{
+	CommonRigidBodyBase::renderScene();
+}
+
+CommonExampleInterface* BasicExampleCreateFunc(CommonExampleOptions& options)
+{
+	return new BasicExample(options.m_guiHelper);
+}
+
+B3_STANDALONE_EXAMPLE(BasicExampleCreateFunc)
+\endcode
+
+There are two main layers of understanding that need to happen here, firstly we can see that this example has specific code for it's own use like when it creates it's own box collision shape, but also there seems to be many helper functions being used here to make the creation of new examples quite simple.
+
+You'll notice that in most of the example code you'll be able to learn about how to set up ceratin situations directly relating to bullet.
+
+\section example-browser-infrastructure Example Browser Infrastructure
+
+While reading the examples directly will teach you a lot about how bullet works in isolation, learning about how bullet is integrated into real code is another big takeaway from these examples. So we'll start by looking at this. 
+
+Before we get started, crack out the source code and be ready to follow along. I find the best way to learn a complex system is to start by running the code ourselves (as if we were running it) and seeing what this execution path interacts with along the way. By picking a good start point you should be able to get a full end to end view of the system.
+
+\subsubsection loading-in-graphics-data Loading in Graphics Data
+
+First off, you'll probably have noticed `m_guiHelper` hanging around a bit, it's used at the start to generate the axis, it sets up the toggleable debug drawer in the example browser, and finally auto generates graphics objects before the as a part of the physics initialization method. 
+
+You'll be able to locate most of these helpers through the examples/CommonInterfaces directory in the bullet library, and specificially in that directory you can find `CommonGUIHelperInterface.h` which provides an interface for a gui helper.
+
+If you hadn't recognized yet, the example browser uses opengl to render the examples, and since we've seen that this gui helper has the ability to auto generate graphics objects, it would make sense if it the implementation of the gui helper would be in some opengl related folder, and of course it is. You can locate it at `/ExampleBrowser/OpenGLGuiHelper.cpp`.
+
+Reading through the implementation of `autogenerateGraphicsObjects` we find that it iterates through a list of objects calling `createCollisionObjectGraphicsObject` so we go to it's implementation and see that a few checks are made and then eventually a pretty big call is made to `registerGraphicsInstance` passing along the id of this shape, it's initial position, rotation, color and scaling. The true call is actually quite lengthy and looks something like this:
+
+\code{.cpp}
+int graphicsInstanceId = m_data->m_glApp->m_renderer->registerGraphicsInstance(graphicsShapeId, startTransform.getOrigin(), startTransform.getRotation(), color, localScaling);
+\endcode
+
+When first seeing this call, we can tell that we've hit something important because it seems to go through many objects, and talk to the renderer. We'll first start with what `m_glApp` is.
+
+We can find out that it's type is `CommonGraphicsApp`, and one of the implementations of it is in `OpenGLWindow/SimpleOpenGL3App.cpp`, here we can see that when it is instantiated `m_renderer` is set to a new `GLInstancingRenderer` object, which is defined in `OpenGLWindow/GLInstancingRenderer.cpp`.
+
+At this point we can see the definition of `registerGraphicsInstance` which was our goal. Looking in it's definition we can see that it simply stores the data passed in into `m_data` which has the type `InternalDataRenderer`, this internal data has individual pointers for the positional, rotational, color and scale information so that opengl can use it in the VAO.
+
+This file is actually quite important when it comes to rendering, if we go to the top of the file you can see the vertex and fragment shader source code, additionally it provides various drawing functionalities which take in information and draw it with opengl. Usually this ends up looking like binding any texture samplers using the shader program, binding any matrix uniforms into the shader as well as colors attributes, then the vertex array object is bound and then `glDrawArrays` is used to finally draw the information, after all that is done the vertex array object is unbound. 
+
+\subsubsection rendering Rendering
+
+At this point we've dug through a few files, and we are getting a fuller understanding of how this system works. One thing that isn't quite clear is that in our original `BasicExample.cpp` file, we saw nothing to do with the rendering, it simply set up the data and never did anything with it. That tells us that the rendering is being abstracted away somewhere, we do know that our rendering uses opengl, and that that is an iterative animation system so that there will most likely be a main loop calling a function, which eventually updates the graphics.
+
+Following this thread we can take a look at `ExampleBrowser/main.cpp` which we can assume is the main entry point into the example browser. Inside of this file, we can see that an instance of the class `OpenGLExampleBrowser` is instantiated, then a bit later we find a do while loop that calls update on this example browser instance. This seems promising so we can take a look inside of `ExampleBrowser/OpenGLExampleBrowser.cpp`.
+
+Inside of this file we can see the definition of the update method which is a bit of a monster, and could do with a refactor for sure. The main logic is that it verifies what kind of simulation is being run and then based on that it updates the graphics accordingly. 
+
+So long as we have loaded up a demo, there are a few options, which are if the simulation is currently paused, if it is a single step simulation (meaning that we only step the simulation for one iteration), if the simulation used a fixed or varying time step, all in all this stage determines how the simulation should be stepped.
+
+Then if we are going to be rendering visual geometry we then call `renderScene` on the current demo, this rendering component should be what we are after. 
+
+\subsubsection how-it-knows-the-current-demo How it Knows the Current Demo (Aside)
+
+The variable `sCurrentDemo` is initialized through this line 
+
+\code{.cpp}
+sCurrentDemo = gFileImporterByExtension[i].m_createFunc(options);
+\endcode
+
+This line resides in the function `void openFileDemo(const char* filename)`, which is called through a callback when a user selects a demo through the gui, and this function iterates the index i until:
+
+\code{.cpp}
+if (strstr(fullPath, gFileImporterByExtension[i].m_extension.c_str()))
+\endcode
+
+Becomes true, and then calls the previous line I mentioned. The call to `m_createFunc` is imporant, looking at any example and specifically `BasicExample.cpp` we can see that this call simply creates and returns a new object `BasicExample` that inherits from the `CommonExampleInterface`. It can be thought of as a constructor method.
+
+This completes the aside.
+
+Back to rendering, we know that the following call is made: `sCurrentDemo->updateGraphics();`, but doing a recursive search ththrough the code base only told that the `PhysicsServerExample` has an implementation. This means that most likely the instancing renderer is automatically doing the rendering itself.
+
+\subsubsection instancing-renderer Instancing Renderer
+
+Before we continue with the rendering it's about time we actually crack down on what an instancing renderer is as it keeps coming up, I highly recommend you read learnopengl.com's highly detailed explanation on the topic here: https://learnopengl.com/Advanced-OpenGL/Instancing.
+
+To boil it down quickly, when we render stuff with opengl for a small collection of object we usually just iterate through the objects, each time binding their respective VAO's textures and uniforms before calling an opengl draw method. Even if all the object were the same (perhaps a basic cube), we would still need to do this for each one, this will eventually case a performance bottleneck because of how many draw calls there are as the number of objects increases.
+
+So long as we wish to draw the same object, but with different transformations, we can use glDrawArraysInstanced, which allows us to use the object once, along with a instance count and we can then use this as an index to change the positions of the objects in the shader, this makes it so that we only need one draw call and makes the rendering much faster.
+
+With that out of the way, recall that the instancing renderer is located at `OpenGLWindow/GLInstancingRenderer.cpp`, here we can find `renderScene` and `renderSceneInternal` the latter of which does all the heavy lifting. It can roughly be broken down into the following sections
+
+1. Optionally enable face culling, shadow maps. 
+2. Prepare matrices, depth matrix, bias matrix, view and projection matrix
+3. Iterate through transparent objects and store them in an array
+4. Iterate through opaque and then transparent objects
+	4.1. If this object is a texture load in the texture and create a texture unit for it setting relevant information
+	4.2. If this object not a texture create a default texture
+	4.3. Bind a VAO for the current object `glBindVertexArray(gfxObj->m_cube_vao);`
+	4.4. Set up vertex attribute pointers for vertex positions (of the collision shape), position of each instance (or just 1 if one instance), rotations for each instance, uvs, normals, colors of each instance, scale of each instance.
+	4.5. Enable vertex attribute arrays and bind the indices for the current object's vertices into the VAO
+5. Based on the current render mode each one of which is a choice of shadows, texturing methods, image segmentation (we'll focus on the default render mode)
+	5.1. load in the shader program 
+	5.2. store the projection, view matrix and lighting information into their shader uniforms
+	5.3. use `glDrawElementsInstanced(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, indexOffset, gfxObj->m_numGraphicsInstances);` to draw all the instances of this object at once.
+
+Note that there is no model matrix required because when we use instancing we draw the same object in different locations by passing an buffer of positions to opengl.
+
+\subsection recap Recap
+
+The way the example browser works is that it defines a common interface for all examples, it has a renderer interface and by defualt it uses the opengl renderer with instanced rendering. The examples create bullet physics objects and then call `glDrawElementsInstanced(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, indexOffset, gfxObj->m_numGraphicsInstances);` which takes all the collision shapes in the current bullet physics simulation and for each one it converts it into a form that is ready for opengl to use.
+
+Then in the main function of the example browser there is a loop that calls update on the example browser which eventually renders everything that was created through the call to `autogenerateGraphicsObjects`.
+
+The main methods you should check out would be 
+
+1. `void OpenGLGuiHelper::autogenerateGraphicsObjects(btDiscreteDynamicsWorld* rbWorld)`
+2. `void OpenGLGuiHelper::createCollisionShapeGraphicsObject(btCollisionShape* collisionShape)`
+3. `int OpenGLGuiHelper::registerGraphicsShape(const float* vertices, int numvertices, const int* indices, int numIndices, int primitiveType, int textureId)`
+4. `int GLInstancingRenderer::registerShape(const float* vertices, int numvertices, const int* indices, int numIndices, int primitiveType, int textureId)` line 1162 in examples/OpenGLWindow/GLInstancingRenderer.cpp
+
+
+*/

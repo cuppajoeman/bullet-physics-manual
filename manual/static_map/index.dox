@@ -73,6 +73,8 @@ While programatically creating collision shapes can work, we'll need a way to lo
 
 Usually you'll load in and parse your data external program or file
 
+check this question: https://gamedev.stackexchange.com/questions/12925/how-would-i-use-glm-for-bullet-physics
+
 
 
 
