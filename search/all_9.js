@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['obj_20files_0',['Obj Files',['../static_map.html#obj_files',1,'']]],
-  ['opengl_1',['OpenGL',['../Integrating.html',1,'']]]
+  ['knows_20the_20current_20demo_20aside_0',['How it Knows the Current Demo (Aside)',['../Examples.html#how-it-knows-the-current-demo',1,'']]]
 ];

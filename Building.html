@@ -127,7 +127,13 @@ Using Bullet as a Library</h2>
 <li>tells the linker to link the following cmake targets against our project</li>
 </ol>
 <p>If you're curious about how I knew what the names were for those libraries, look at the structure of the src file in Bullet, you'll find directories with similar names, each of which contain a <code>CMakeLists.txt</code> file and inside you'll find a line like this <code>ADD_LIBRARY(BulletDynamics ${BulletDynamics_SRCS} ${BulletDynamics_HDRS})</code> which defines that as a cmake target for us to reference later on. Also note that the order matters for some reason, [TODO: put reason it matters here], I believe it has to do with this: <a href="https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc">https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc</a></p>
-<p>With that set up, you can now move on to the basics section, in the root of your project dir you can now run <code>cmake -S . -B build</code> and <code>cmake --build build</code> to compile your code. </p>
+<p>With that set up, you can now move on to the basics section, in the root of your project dir you can now run <code>cmake -S . -B build</code> and <code>cmake --build build</code> to compile your code.</p>
+<h3><a class="anchor" id="building-what-you-need"></a>
+Building What You need</h3>
+<p>You might have noticed that during your build process we built many things, including tests and examples, there are a few reasons you might not want to do this.</p>
+<p>First off, while the above example works fine, if you're bringing bullet into an existing codebase, you may run into errors when compiling the examples along with your code because bullet provides third party libraries in the examples, which might overwrite packages that you have, for example I had a glfw project that used glad, and in the examples it also provided an instance of glad, but I got an error saying it that the gladLoader function call was undefined.</p>
+<p>Moreover, there is no reason to build examples or to do tests if your goal is to simply use bullet as a third party library as it unessesarily complicates the build and takes longer.</p>
+<p>At the moment when we run <code>add_submodule(external_libraries/bullet3/src)</code> it will recursively add any other directories that also contain <code>CMakeLists.txt</code> in them, and if you take a look at the code base you will find many such instances. Therefore an easy way to not build these cmake targets is by renaming the <code>CMakeLists.txt</code> to something like <code>ignore_CMakeLists.txt</code>, then go into the examples and test directory and do that to both <code>CMakeLists.txt</code> you encounter, when you build the library alongside your project you will not build the extraneous targets. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

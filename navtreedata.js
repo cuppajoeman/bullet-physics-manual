@@ -31,6 +31,12 @@ var NAVTREE =
       [ "Convex Hulls", "collision_shapes.html#convex_hulls", null ],
       [ "Compound Shapes", "collision_shapes.html#compound_shapes", null ]
     ] ],
+    [ "Examples", "Examples.html", [
+      [ "Basic Example", "Examples.html#basic-example", null ],
+      [ "Example Browser Infrastructure", "Examples.html#example-browser-infrastructure", [
+        [ "Recap", "Examples.html#recap", null ]
+      ] ]
+    ] ],
     [ "OpenGL", "Integrating.html", null ],
     [ "Body", "Rigid.html", null ],
     [ "Static Map", "static_map.html", [

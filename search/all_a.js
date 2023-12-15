@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['shapes_0',['shapes',['../collision_shapes.html#basic_collision_shapes',1,'Basic Collision Shapes'],['../collision_shapes.html',1,'Collision Shapes'],['../collision_shapes.html#compound_shapes',1,'Compound Shapes']]],
-  ['static_20map_1',['Static Map',['../static_map.html',1,'']]]
+  ['library_0',['Using Bullet as a Library',['../Building.html#using-bullet-as-a-library',1,'']]],
+  ['loading_20in_20data_1',['Loading in Data',['../static_map.html#loading_data',1,'']]],
+  ['loading_20in_20graphics_20data_2',['Loading in Graphics Data',['../Examples.html#loading-in-graphics-data',1,'']]],
+  ['loading_20triangles_20manually_3',['Loading Triangles Manually',['../static_map.html#adding_triangles_manually',1,'']]]
 ];

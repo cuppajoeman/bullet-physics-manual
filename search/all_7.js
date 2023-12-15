@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['library_0',['Using Bullet as a Library',['../Building.html#using-bullet-as-a-library',1,'']]],
-  ['loading_20in_20data_1',['Loading in Data',['../static_map.html#loading_data',1,'']]],
-  ['loading_20triangles_20manually_2',['Loading Triangles Manually',['../static_map.html#adding_triangles_manually',1,'']]]
+  ['how_20it_20knows_20the_20current_20demo_20aside_0',['How it Knows the Current Demo (Aside)',['../Examples.html#how-it-knows-the-current-demo',1,'']]],
+  ['hulls_1',['Convex Hulls',['../collision_shapes.html#convex_hulls',1,'']]]
 ];
