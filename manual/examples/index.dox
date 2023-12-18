@@ -140,7 +140,18 @@ There are two main layers of understanding that need to happen here, firstly we 
 
 You'll notice that in most of the example code you'll be able to learn about how to set up ceratin situations directly relating to bullet.
 
-\section example-browser-infrastructure Example Browser Infrastructure
+\section example-browser Example Browser 
+
+The example browser is the best way to see how bullet works and what it's capable of, to run the example browser you should be familiar with building bullet directly which you can read about in the building section.
+
+To operate the example browser simply select the example you're interested in in the left panel.
+
+- ctrl + mouse click and drag will rotate the camera about the origin
+- click and drag can move certain objects if they're interactive
+- s toggles shadows
+- w toggles wireframe mode
+
+\subsection infrastructure Infrastructure
 
 While reading the examples directly will teach you a lot about how bullet works in isolation, learning about how bullet is integrated into real code is another big takeaway from these examples. So we'll start by looking at this. 
 
@@ -239,5 +250,6 @@ The main methods you should check out would be
 3. `int OpenGLGuiHelper::registerGraphicsShape(const float* vertices, int numvertices, const int* indices, int numIndices, int primitiveType, int textureId)`
 4. `int GLInstancingRenderer::registerShape(const float* vertices, int numvertices, const int* indices, int numIndices, int primitiveType, int textureId)` line 1162 in examples/OpenGLWindow/GLInstancingRenderer.cpp
 
+In the call to `void OpenGLGuiHelper::createCollisionShapeGraphicsObject(btCollisionShape* collisionShape)` we can see that if the passed in object is a cube that a standard cube is loaded in through `cube_vertices_textured`, using a recursive grep search we can see it's defined here `/OpenGLWindow/ShapeData.h` on line 475, you'll find that these shapes are stored as 1d arrays, but follow a certain ordering based on what extra information is stored in the array such as normals and texture coordinates. From this comment we can see that the objects data is not pulled directly from the collision shape created in bullet but is simply using vertices from a constants file.
 
 */

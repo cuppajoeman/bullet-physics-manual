@@ -49,4 +49,178 @@ for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--) {
 }
 \endcode
 
+You notice that in this code example we compare the name of the collision shape which are defined automatically and then based on what that returns we render a specific object.
+
+While this works fine in this toy example but in the future you might want to support many different objects, and so hard coding if statements will not scale well when you have hundreds of different objects. 
+
+One way to approach this is through a collision shapes `setUserIndex` and `getUserIndex` calls, which allows you to store arbitrary indices in your physics objects. With that in place you can store a list of models in your main program and then when you iterate through the collision objects, you use the user index to grab the correct model before transforming it to the collision shapes position.
+
+\section debug-graphics Debug Graphics
+
+Bullet physics provides methods which you can provide an implementation to and then bullet will automatically make the draw calls for you to help you visualize what's going on in the physics engine.
+
+To do so override btIDebugDraw, implement the drawLine method using OpenGL or your rendering engine and then Bullet will take care of everything else and draw the collision shape on top of whatever is on screen.
+
+https://pybullet.org/Bullet/BulletFull/classbtIDebugDraw.html
+
+`physics_debug_drawer.hpp`
+
+\code{.cpp}
+#ifndef PHYSICS_DEBUG_DRAWER_HEADER
+#define PHYSICS_DEBUG_DRAWER_HEADER
+
+#include <LinearMath/btIDebugDraw.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "shader_pipeline.hpp"
+
+class PhysicsDebugDrawer : public btIDebugDraw {
+public:
+
+	GLuint vertex_buffer_object, vertex_attribute_object;
+
+	ShaderPipeline line_shader_pipeline;
+
+	PhysicsDebugDrawer(glm::mat4 camera_to_clip, glm::mat4 world_to_camera);
+ 
+    virtual void drawLine(const btVector3& from, const btVector3& to, const btVector3& color);
+
+    virtual void drawContactPoint(const btVector3 &, const btVector3 &, btScalar, int, const btVector3 &) {} // empty implementation
+
+    virtual void reportErrorWarning(const char *) {} // empty implementation
+
+    virtual void draw3dText(const btVector3 &, const char *) {} // empty implementation
+
+    virtual void setDebugMode(int p) {
+        m = p;
+    } // empty implementation
+
+    int getDebugMode(void) const { return 3; } // empty implementation
+
+    int m;
+};
+#endif
+\endcode
+
+`physics_debug_drawer.cpp`
+\code{.cpp}
+#include "physics_debug_drawer.hpp"
+
+PhysicsDebugDrawer::PhysicsDebugDrawer(glm::mat4 camera_to_clip, glm::mat4 world_to_camera) {
+
+	line_shader_pipeline.load_in_shaders_from_file("../shaders/absolute_position.vert", "../shaders/absolute_position.frag");
+
+	GLint world_to_camera_uniform_location = glGetUniformLocation(line_shader_pipeline.shader_program_id, "world_to_camera");
+	glUniformMatrix4fv(world_to_camera_uniform_location, 1, GL_FALSE, glm::value_ptr(world_to_camera));
+
+	GLint camera_to_clip_uniform_location = glGetUniformLocation(line_shader_pipeline.shader_program_id, "camera_to_clip");
+	glUniformMatrix4fv(camera_to_clip_uniform_location, 1, GL_FALSE, glm::value_ptr(camera_to_clip));
+
+}
+
+void PhysicsDebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color) {
+	// Vertex data
+	GLfloat points[12];
+
+	points[0] = from.x();
+	points[1] = from.y();
+	points[2] = from.z();
+	points[3] = color.x();
+	points[4] = color.y();
+	points[5] = color.z();
+
+	points[6] = to.x();
+	points[7] = to.y();
+	points[8] = to.z();
+	points[9] = color.x();
+	points[10] = color.y();
+	points[11] = color.z();
+
+	// Why do we have to do this?
+	glDeleteBuffers(1, &vertex_buffer_object);
+	glDeleteVertexArrays(1, &vertex_attribute_object);
+
+	glGenBuffers(1, &vertex_buffer_object);
+	glGenVertexArrays(1, &vertex_attribute_object);
+	glBindVertexArray(vertex_attribute_object);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_object);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(points), &points, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+
+	glBindVertexArray(0);
+
+	glBindVertexArray(vertex_attribute_object);
+	glDrawArrays(GL_LINES, 0, 2);
+	glBindVertexArray(0);
+}
+\endcode
+
+It's possible that you've noticed, but in our shaders we never bind a `local_to_world` transformation, the reason why is that the debug drawer uses absolute positions when drawing, if you've learned opengl through learnopengl.com this might be a little weird since you'd be used to moving a collection of vertices (such as a cube) around via a `local_to_world` transformation rather than changing the actual location of vertices. With that in mind the shader source code should make sense:
+
+`absolute_position.vert`
+
+\code{.cpp}
+#version 330 core
+
+// This shader draws vertices at an absolute location rather than using a
+// local to world coordinate transformation, it also specifies a color to
+// be used during the drawing
+
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 color;
+ 
+out vec3 passthrough_color;
+
+uniform mat4 camera_to_clip;
+uniform mat4 world_to_camera;
+ 
+void main() {
+    gl_Position = camera_to_clip * world_to_camera * vec4(position, 1.0f);
+	passthrough_color = color;
+}
+\endcode
+
+`absolute_position.frag`
+
+\code{.cpp}
+#version 330 core
+
+in vec3 passthrough_color;
+out vec4 frag_color;
+ 
+void main()
+{
+    frag_color = passthrough_color;   
+}
+\endcode
+
+
+
+Then in your `main.cpp` or where ever your main game loop resides you create your debug drawer, register it with bullet and then call the draw method on every iteration. Your implementation may vary, but personally I have a set up like this:
+
+\code{.cpp}
+int main() {
+	...
+
+	PhysicsDebugDrawer physics_debug_drawer(camera_to_clip, world_to_camera);
+	physics.dynamics_world->setDebugDrawer(&physics_debug_drawer);
+
+	...
+
+	while (running) {
+		... 
+		physics.dynamics_world->debugDrawWorld();
+		...
+	}
+	...
+
+}
+\endcode
+
 */

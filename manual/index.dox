@@ -1,4 +1,11 @@
 /** \mainpage Manual
+
+Welcome to the bullet physics engine, it is an open source physics engine available on windows, mac and linux.
+
+, if this is your first time working with a physics engine I recommend watching this video to learn some of the basics: https://www.youtube.com/watch?v=-_IspRG548E
+
+This documentation is currently a work in progress, the PhysX library is a bit ahead in that regard, so feel free to check out their documentation here as it may help you understand what's going on with the bullet physics engine
+
 - \subpage Building 
 - \subpage Basics
 */

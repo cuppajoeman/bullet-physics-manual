@@ -1,0 +1,41 @@
+/** \page character-controller Character Controller
+
+A character controller is a physics object, which doesn' interact with other objects in the same ways that others do and can be controller by a user. A good example of a character controller is the one shown in this reddit post: https://www.reddit.com/r/Unity3D/comments/738lyj/finished_my_ideal_character_controller_after_2/
+
+When you first start researching character controllers with bullet you'll probably initially be bombarded by many people asking how to build one, additionally if you start reading into these articles you'll start piecing together an image of the state of the character controller in bullet, needless to say it's not in the best state.
+
+- btKinematicCharacterController (<a href="https://github.com/bulletphysics/bullet3/issues/167#issuecomment-566853354">No longer supported</a>)
+
+While it makese sense for a physics engine to be good a just physics, it would be great to have a basic character controller working in bullet physics. If you're up for the task feel free to open an issue about this and get some feedback.
+
+\section kinematic-vs-dynamic Kinematics vs Dynamic
+
+\subsection dynamic Dynamic
+
+A dynamic character controller is thought of as a rigid body with an infinite intertia tensor, that is to say it's a rigid body but unable to rotate. This allows the body to interact with the phsics engine regularly, though these interactions may not always be predictable.
+
+This type of controller doesn't have direct control over the bodies position, as it's position changes through impulses or forces, so if you need to move your character controller to a specific location, you may find it hard to accurately move it there through this "2nd order control".
+
+Additionally there will be situations that come to mind where you have to modify the default behavior of the object, for example if we've modelled a stair set using a wedge, and the player attempts to climb up this wedge, since our character is just a regular physics object, they would start sliding down the wedge
+
+The general summary of this is that to to create a dynamic character controller, you have to take a regular physics object and tweak it's behavior and disable features until it behaves as desired.
+
+\subsection kinematic Kinematic
+
+On the other hand a kinematic controller is one that cannot directly interact with physics objects unless it is written explicitly in the code. 
+
+read more here: https://docs.nvidia.com/gameworks/content/gameworkslibrary/physx/guide/3.3.4/Manual/CharacterControllers.html
+
+This type of character controller can be good for a player that might make impossible movements such as turning corners incredibly fast and so on.
+
+\section btKinematicCharacterController btKinematicCharacterController 
+
+To understand what a kinematic character controller is, let's first
+
+\section a-simple-character-controller A Simple Character Controller
+
+resources:
+- https://www.reddit.com/r/gamedev/comments/2og487/bullet_physics_player_controller_than_can_be/
+- https://github.com/bulletphysics/bullet3/issues/1387
+
+*/

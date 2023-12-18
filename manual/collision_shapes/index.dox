@@ -1,0 +1,30 @@
+/** \page collision_shapes Collision Shapes
+
+A shape that bullet uses to detect collisions within the bullet physics engine. 
+
+\section introduction Introduction
+
+Collision shapes are required for us to simulate objects in bullet's simulation. Collision shapes can come from a collection of predefied shapes such as the following:
+
+- btSphereShape
+- btCylinderShape
+- btConeShape
+- btBoxShape
+- ...
+
+We can note that all of the shapes we just mentioned were ones that are convex, through we may eventually work with shapes which are not convex or may come from arbitrary sets of points and for those shapes they all inherit from `btConvcaveShape` and the main ones are
+
+- btHeightFieldTerrainShape
+- btSoftBodyCollisionShape
+- btStaticPlaneShape
+- btTriangleMeshShape
+- btPlaneShape
+- ...
+
+\section drawing Drawing
+
+A common task you'll want to do is to visualize these collision shapes, if you're using opengl then the way you can do this is by getting the the world transform from the collision shap e and then use that as the `local_to_world` matrix.
+
+Read more about this in the opengl section.
+
+*/

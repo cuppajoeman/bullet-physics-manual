@@ -1,0 +1,25 @@
+/** \page Extras
+
+The bullet physics engine comes with many additional features and programs which you might find useful, here we'll explore the different extras.
+
+\section serialize Serialize
+
+The process of serializing something is translating it's data structure or state into a format that can be stored in files or transmitted over streams and reconstructed at a later point in time.
+
+Bullet provides a few things:
+
+- BlenderSerialize
+- BulletFileLoader
+- BulletWorldImporter
+- BulletXmlWorldImporter
+- HeaderGenerator
+- makesdna/
+- ReadBulletSample/
+
+\section world-importer World Importer
+
+Bullet has a built in model/world loader, 
+
+Export everything in blender to .bullet and simply load it using btBulletWorldImporter
+
+*/
