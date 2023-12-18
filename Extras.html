@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bullet Physics: Collision Shapes</title>
+<title>Bullet Physics: Extras</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,7 +63,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('collision_shapes.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('Extras.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -89,33 +89,27 @@ $(document).ready(function(){initNavTree('collision_shapes.html',''); initResiza
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Collision Shapes</div></div>
+  <div class="headertitle"><div class="title">Extras</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>A shape that bullet uses to detect collisions within the bullet physics engine.</p>
-<h1><a class="anchor" id="introduction"></a>
-Introduction</h1>
-<p>Collision shapes are required for us to simulate objects in bullet's simulation. Collision shapes can come from a collection of predefied shapes such as the following:</p>
+<div class="textblock"><p>The bullet physics engine comes with many additional features and programs which you might find useful, here we'll explore the different extras.</p>
+<h1><a class="anchor" id="serialize"></a>
+Serialize</h1>
+<p>The process of serializing something is translating it's data structure or state into a format that can be stored in files or transmitted over streams and reconstructed at a later point in time.</p>
+<p>Bullet provides a few things:</p>
 <ul>
-<li>btSphereShape</li>
-<li>btCylinderShape</li>
-<li>btConeShape</li>
-<li>btBoxShape</li>
-<li>...</li>
+<li>BlenderSerialize</li>
+<li>BulletFileLoader</li>
+<li>BulletWorldImporter</li>
+<li>BulletXmlWorldImporter</li>
+<li>HeaderGenerator</li>
+<li>makesdna/</li>
+<li>ReadBulletSample/</li>
 </ul>
-<p>We can note that all of the shapes we just mentioned were ones that are convex, through we may eventually work with shapes which are not convex or may come from arbitrary sets of points and for those shapes they all inherit from <code>btConvcaveShape</code> and the main ones are</p>
-<ul>
-<li>btHeightFieldTerrainShape</li>
-<li>btSoftBodyCollisionShape</li>
-<li>btStaticPlaneShape</li>
-<li>btTriangleMeshShape</li>
-<li>btPlaneShape</li>
-<li>...</li>
-</ul>
-<h1><a class="anchor" id="drawing"></a>
-Drawing</h1>
-<p>A common task you'll want to do is to visualize these collision shapes, if you're using opengl then the way you can do this is by getting the the world transform from the collision shap e and then use that as the <code>local_to_world</code> matrix.</p>
-<p>Read more about this in the opengl section. </p>
+<h1><a class="anchor" id="world-importer"></a>
+World Importer</h1>
+<p>Bullet has a built in model/world loader,</p>
+<p>Export everything in blender to .bullet and simply load it using btBulletWorldImporter </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

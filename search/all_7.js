@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['how_20it_20knows_20the_20current_20demo_20aside_0',['How it Knows the Current Demo (Aside)',['../Examples.html#how-it-knows-the-current-demo',1,'']]],
-  ['hulls_1',['Convex Hulls',['../collision_shapes.html#convex_hulls',1,'']]]
+  ['how_20it_20knows_20the_20current_20demo_20aside_0',['How it Knows the Current Demo (Aside)',['../Examples.html#how-it-knows-the-current-demo',1,'']]]
 ];

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['shapes_0',['shapes',['../collision_shapes.html#basic_collision_shapes',1,'Basic Collision Shapes'],['../collision_shapes.html',1,'Collision Shapes'],['../collision_shapes.html#compound_shapes',1,'Compound Shapes']]],
-  ['static_20map_1',['Static Map',['../static_map.html',1,'']]]
+  ['serialize_0',['Serialize',['../Extras.html#serialize',1,'']]],
+  ['shapes_1',['Collision Shapes',['../collision_shapes.html',1,'']]],
+  ['simple_20character_20controller_2',['A Simple Character Controller',['../character-controller.html#a-simple-character-controller',1,'']]],
+  ['static_20map_3',['Static Map',['../static_map.html',1,'']]]
 ];

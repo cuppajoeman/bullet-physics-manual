@@ -26,18 +26,37 @@ var NAVTREE =
 [
   [ "Bullet Physics", "index.html", [
     [ "Manual", "index.html", "index" ],
+    [ "Character Controller", "character-controller.html", [
+      [ "Kinematics vs Dynamic", "character-controller.html#kinematic-vs-dynamic", [
+        [ "Dynamic", "character-controller.html#dynamic", null ],
+        [ "Kinematic", "character-controller.html#kinematic", null ]
+      ] ],
+      [ "btKinematicCharacterController", "character-controller.html#btKinematicCharacterController", null ],
+      [ "A Simple Character Controller", "character-controller.html#a-simple-character-controller", null ]
+    ] ],
     [ "Collision Shapes", "collision_shapes.html", [
-      [ "Basic Collision Shapes", "collision_shapes.html#basic_collision_shapes", null ],
-      [ "Convex Hulls", "collision_shapes.html#convex_hulls", null ],
-      [ "Compound Shapes", "collision_shapes.html#compound_shapes", null ]
+      [ "Introduction", "collision_shapes.html#introduction", null ],
+      [ "Drawing", "collision_shapes.html#drawing", null ]
     ] ],
     [ "Examples", "Examples.html", [
       [ "Basic Example", "Examples.html#basic-example", null ],
-      [ "Example Browser Infrastructure", "Examples.html#example-browser-infrastructure", [
+      [ "Example Browser", "Examples.html#example-browser", [
+        [ "Infrastructure", "Examples.html#infrastructure", [
+          [ "Loading in Graphics Data", "Examples.html#loading-in-graphics-data", null ],
+          [ "Rendering", "Examples.html#rendering", null ],
+          [ "How it Knows the Current Demo (Aside)", "Examples.html#how-it-knows-the-current-demo", null ],
+          [ "Instancing Renderer", "Examples.html#instancing-renderer", null ]
+        ] ],
         [ "Recap", "Examples.html#recap", null ]
       ] ]
     ] ],
-    [ "OpenGL", "Integrating.html", null ],
+    [ "Extras", "Extras.html", [
+      [ "Serialize", "Extras.html#serialize", null ],
+      [ "World Importer", "Extras.html#world-importer", null ]
+    ] ],
+    [ "OpenGL", "Integrating.html", [
+      [ "Debug Graphics", "Integrating.html#debug-graphics", null ]
+    ] ],
     [ "Body", "Rigid.html", null ],
     [ "Static Map", "static_map.html", [
       [ "Introduction", "static_map.html#Introduction", null ],

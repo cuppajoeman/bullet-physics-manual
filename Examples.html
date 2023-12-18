@@ -223,8 +223,18 @@ Basic Example</h1>
 <div class="line">B3_STANDALONE_EXAMPLE(BasicExampleCreateFunc)</div>
 </div><!-- fragment --><p>There are two main layers of understanding that need to happen here, firstly we can see that this example has specific code for it's own use like when it creates it's own box collision shape, but also there seems to be many helper functions being used here to make the creation of new examples quite simple.</p>
 <p>You'll notice that in most of the example code you'll be able to learn about how to set up ceratin situations directly relating to bullet.</p>
-<h1><a class="anchor" id="example-browser-infrastructure"></a>
-Example Browser Infrastructure</h1>
+<h1><a class="anchor" id="example-browser"></a>
+Example Browser</h1>
+<p>The example browser is the best way to see how bullet works and what it's capable of, to run the example browser you should be familiar with building bullet directly which you can read about in the building section.</p>
+<p>To operate the example browser simply select the example you're interested in in the left panel.</p>
+<ul>
+<li>ctrl + mouse click and drag will rotate the camera about the origin</li>
+<li>click and drag can move certain objects if they're interactive</li>
+<li>s toggles shadows</li>
+<li>w toggles wireframe mode</li>
+</ul>
+<h2><a class="anchor" id="infrastructure"></a>
+Infrastructure</h2>
 <p>While reading the examples directly will teach you a lot about how bullet works in isolation, learning about how bullet is integrated into real code is another big takeaway from these examples. So we'll start by looking at this.</p>
 <p>Before we get started, crack out the source code and be ready to follow along. I find the best way to learn a complex system is to start by running the code ourselves (as if we were running it) and seeing what this execution path interacts with along the way. By picking a good start point you should be able to get a full end to end view of the system.</p>
 <h3><a class="anchor" id="loading-in-graphics-data"></a>
@@ -277,8 +287,9 @@ Recap</h2>
 <li><code>void OpenGLGuiHelper::autogenerateGraphicsObjects(btDiscreteDynamicsWorld* rbWorld)</code></li>
 <li><code>void OpenGLGuiHelper::createCollisionShapeGraphicsObject(btCollisionShape* collisionShape)</code></li>
 <li><code>int OpenGLGuiHelper::registerGraphicsShape(const float* vertices, int numvertices, const int* indices, int numIndices, int primitiveType, int textureId)</code></li>
-<li><code>int GLInstancingRenderer::registerShape(const float* vertices, int numvertices, const int* indices, int numIndices, int primitiveType, int textureId)</code> line 1162 in examples/OpenGLWindow/GLInstancingRenderer.cpp </li>
+<li><code>int GLInstancingRenderer::registerShape(const float* vertices, int numvertices, const int* indices, int numIndices, int primitiveType, int textureId)</code> line 1162 in examples/OpenGLWindow/GLInstancingRenderer.cpp</li>
 </ol>
+<p>In the call to <code>void OpenGLGuiHelper::createCollisionShapeGraphicsObject(btCollisionShape* collisionShape)</code> we can see that if the passed in object is a cube that a standard cube is loaded in through <code>cube_vertices_textured</code>, using a recursive grep search we can see it's defined here <code>/OpenGLWindow/ShapeData.h</code> on line 475, you'll find that these shapes are stored as 1d arrays, but follow a certain ordering based on what extra information is stored in the array such as normals and texture coordinates. From this comment we can see that the objects data is not pulled directly from the collision shape created in bullet but is simply using vertices from a constants file. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
