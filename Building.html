@@ -109,6 +109,7 @@ Using Bullet Directly</h2>
 Using Bullet as a Library</h2>
 <p>Alternatively you might want to use Bullet as a library in your own programs, for example if you're desinging a game and you want to add physics.</p>
 <p>Start in an empty directory and create the directory <code>external_libraries</code> or something along those lines, inside of this directory add bullet as a submodule, if you're not yet familiar with how submodules work, to sum it up they allow you to add another directories as versioned packages and git will not store the files directly. If you don't want to use submodules now, just clone the project here.</p>
+<p>Note that <code>bal.cpp</code> is using <a href="https://github.com/bulletphysics/bullet3/blob/master/examples/HelloWorld/HelloWorld.cpp">https://github.com/bulletphysics/bullet3/blob/master/examples/HelloWorld/HelloWorld.cpp</a> as it's source code.</p>
 <p>For simplicity we will assume you are running linux and using cmake, in this case we just have to set up the following CMakeLists.txt file like so:</p>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.10)</div>
 <div class="line"> </div>
