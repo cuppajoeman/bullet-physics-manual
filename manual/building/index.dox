@@ -23,7 +23,7 @@ cmake --build .
 
 Alternatively you might want to use Bullet as a library in your own programs, for example if you're desinging a game and you want to add physics.
 
-Start in an empty directory and create the directory `external_libraries` or something along those lines, inside of this directory add bullet as a submodule, if you're not yet familiar with how submodules work, to sum it up they allow you to add another directories as versioned packages and git will not store the files directly.
+Start in an empty directory and create the directory `external_libraries` or something along those lines, inside of this directory add bullet as a submodule, if you're not yet familiar with how submodules work, to sum it up they allow you to add another directories as versioned packages and git will not store the files directly. If you don't want to use submodules now, just clone the project here.
 
 For simplicity we will assume you are running linux and using cmake, in this case we just have to set up the following CMakeLists.txt file like so:
 
@@ -60,5 +60,12 @@ First off, while the above example works fine, if you're bringing bullet into an
 Moreover, there is no reason to build examples or to do tests if your goal is to simply use bullet as a third party library as it unessesarily complicates the build and takes longer. 
 
 At the moment when we run `add_submodule(external_libraries/bullet3/src)` it will recursively add any other directories that also contain `CMakeLists.txt` in them, and if you take a look at the code base you will find many such instances. Therefore an easy way to not build these cmake targets is by renaming the `CMakeLists.txt` to something like `ignore_CMakeLists.txt`, then go into the examples and test directory and do that to both `CMakeLists.txt` you encounter, when you build the library alongside your project you will not build the extraneous targets.
+
+Specifically if you're using the cmake file provided above, then you can do the following:
+
+- To disable the building of examples rename `bullet3/examples/CMakeLists.txt` to `bullet3/examples/CMakeLists.txt_ignored` 
+- To disable the building of tests rename `bullet3/test/CMakeLists.txt` to `bullet3/test/CMakeLists.txt_ignored` 
+
+\todo This method of doing things is a little bit ad hoc, maybe we can find a better way of doing it by changing the cmake file instead. If anyone has any ideas let us know
 
 */

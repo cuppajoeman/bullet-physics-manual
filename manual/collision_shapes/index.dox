@@ -27,4 +27,10 @@ A common task you'll want to do is to visualize these collision shapes, if you'r
 
 Read more about this in the opengl section.
 
+\section kinematic Kinematic
+
+resources
+- https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=7195
+
+
 */

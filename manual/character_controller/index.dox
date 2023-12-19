@@ -30,12 +30,29 @@ This type of character controller can be good for a player that might make impos
 
 \section btKinematicCharacterController btKinematicCharacterController 
 
-To understand what a kinematic character controller is, let's first
+\subsection how-to-fix How To Fix
+
+As we mentioned previously the kinematic controller is not in a good state, see some of the current issues:
+
+relevant issues:
+- https://github.com/bulletphysics/bullet3/issues/4329
+- https://github.com/bulletphysics/bullet3/discussions/3523
+- https://github.com/bulletphysics/bullet3/issues/84
+- https://github.com/bulletphysics/bullet3/issues/40
+
+In order to fix this class I recommend to first watch this video which should give you a basic understanding of what we have to do: https://youtu.be/s-99Z_W8bcQ, after that we can use godot's source code as a general guide line on what methods we'll need https://youtu.be/s-99Z_W8bcQ
 
 \section a-simple-character-controller A Simple Character Controller
+
+Until the kinematic character controller is supported again, we can create a dynamic character controller, the general outline for this will be to create a capsule shape object, make sure it's unable to fall over (like a tic tac placed on a table), and then apply forces to it.
 
 resources:
 - https://www.reddit.com/r/gamedev/comments/2og487/bullet_physics_player_controller_than_can_be/
 - https://github.com/bulletphysics/bullet3/issues/1387
+- https://github.com/Lumak/Urho3D-KinematicCharacterController/blob/master/Source/Samples/82_KinematicPlatform/KinematicCharacterController.cpp
+- git@github.com:godotengine/godot.git (find the kinematic character controller)
+- https://docs.godotengine.org/en/stable/classes/class_characterbody3d.html
+- 
+
 
 */
