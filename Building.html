@@ -126,7 +126,8 @@ Using Bullet as a Library</h2>
 <li>tells cmake to also build bullet when we build this directory</li>
 <li>tells the linker to link the following cmake targets against our project</li>
 </ol>
-<p>If you're curious about how I knew what the names were for those libraries, look at the structure of the src file in Bullet, you'll find directories with similar names, each of which contain a <code>CMakeLists.txt</code> file and inside you'll find a line like this <code>ADD_LIBRARY(BulletDynamics ${BulletDynamics_SRCS} ${BulletDynamics_HDRS})</code> which defines that as a cmake target for us to reference later on. Also note that the order matters for some reason, [TODO: put reason it matters here], I believe it has to do with this: <a href="https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc">https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc</a></p>
+<p>If you're curious about how I knew what the names were for those libraries, look at the structure of the src file in Bullet, you'll find directories with similar names, each of which contain a <code>CMakeLists.txt</code> file and inside you'll find a line like this <code>ADD_LIBRARY(BulletDynamics ${BulletDynamics_SRCS} ${BulletDynamics_HDRS})</code> which defines that as a cmake target for us to reference later on. Also note that the order matters for some reason.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>I believe it has to do with this: <a href="https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc">https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc</a>, but when we know the real reason add the explanation to the end of this paragraph.</dd></dl>
 <p>With that set up, you can now move on to the basics section, in the root of your project dir you can now run <code>cmake -S . -B build</code> and <code>cmake --build build</code> to compile your code.</p>
 <h3><a class="anchor" id="building-what-you-need"></a>
 Building What You need</h3>
@@ -138,7 +139,7 @@ Building What You need</h3>
 <ul>
 <li>To disable the building of examples rename <code>bullet3/examples/CMakeLists.txt</code> to <code>bullet3/examples/CMakeLists.txt_ignored</code></li>
 <li><p class="startli">To disable the building of tests rename <code>bullet3/test/CMakeLists.txt</code> to <code>bullet3/test/CMakeLists.txt_ignored</code></p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>This method of doing things is a little bit ad hoc, maybe we can find a better way of doing it by changing the cmake file instead. If anyone has any ideas let us know</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>This method of doing things is a little bit ad hoc, maybe we can find a better way of doing it by changing the cmake file instead. If anyone has any ideas let us know</dd></dl>
 </li>
 </ul>
 </div></div><!-- contents -->
