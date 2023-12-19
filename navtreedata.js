@@ -28,10 +28,12 @@ var NAVTREE =
     [ "Manual", "index.html", "index" ],
     [ "Character Controller", "character-controller.html", [
       [ "Kinematics vs Dynamic", "character-controller.html#kinematic-vs-dynamic", [
-        [ "Dynamic", "character-controller.html#dynamic", null ],
-        [ "Kinematic", "character-controller.html#kinematic", null ]
+        [ "Dynamic", "character-controller.html#dynamic", null ]
       ] ],
-      [ "btKinematicCharacterController", "character-controller.html#btKinematicCharacterController", null ],
+      [ "Kinematic", "character-controller.html#kinematic", null ],
+      [ "btKinematicCharacterController", "character-controller.html#btKinematicCharacterController", [
+        [ "How To Fix", "character-controller.html#how-to-fix", null ]
+      ] ],
       [ "A Simple Character Controller", "character-controller.html#a-simple-character-controller", null ]
     ] ],
     [ "Collision Shapes", "collision_shapes.html", [
@@ -50,6 +52,7 @@ var NAVTREE =
         [ "Recap", "Examples.html#recap", null ]
       ] ]
     ] ],
+    [ "Explosions", "explosions.html", null ],
     [ "Extras", "Extras.html", [
       [ "Serialize", "Extras.html#serialize", null ],
       [ "World Importer", "Extras.html#world-importer", null ]
@@ -58,6 +61,7 @@ var NAVTREE =
       [ "Debug Graphics", "Integrating.html#debug-graphics", null ]
     ] ],
     [ "Body", "Rigid.html", null ],
+    [ "Ball", "Rolling.html", null ],
     [ "Static Map", "static_map.html", [
       [ "Introduction", "static_map.html#Introduction", null ],
       [ "btBVHTriangleMeshShape", "static_map.html#btBVHTriangleMeshShape", null ],
@@ -65,7 +69,8 @@ var NAVTREE =
         [ "Loading Triangles Manually", "static_map.html#adding_triangles_manually", null ],
         [ "Obj Files", "static_map.html#obj_files", null ]
       ] ]
-    ] ]
+    ] ],
+    [ "Todo List", "todo.html", null ]
   ] ]
 ];
 

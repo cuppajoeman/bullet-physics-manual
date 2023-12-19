@@ -108,7 +108,7 @@ Using Bullet Directly</h2>
 </div><!-- fragment --><h2><a class="anchor" id="using-bullet-as-a-library"></a>
 Using Bullet as a Library</h2>
 <p>Alternatively you might want to use Bullet as a library in your own programs, for example if you're desinging a game and you want to add physics.</p>
-<p>Start in an empty directory and create the directory <code>external_libraries</code> or something along those lines, inside of this directory add bullet as a submodule, if you're not yet familiar with how submodules work, to sum it up they allow you to add another directories as versioned packages and git will not store the files directly.</p>
+<p>Start in an empty directory and create the directory <code>external_libraries</code> or something along those lines, inside of this directory add bullet as a submodule, if you're not yet familiar with how submodules work, to sum it up they allow you to add another directories as versioned packages and git will not store the files directly. If you don't want to use submodules now, just clone the project here.</p>
 <p>For simplicity we will assume you are running linux and using cmake, in this case we just have to set up the following CMakeLists.txt file like so:</p>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.10)</div>
 <div class="line"> </div>
@@ -133,7 +133,14 @@ Building What You need</h3>
 <p>You might have noticed that during your build process we built many things, including tests and examples, there are a few reasons you might not want to do this.</p>
 <p>First off, while the above example works fine, if you're bringing bullet into an existing codebase, you may run into errors when compiling the examples along with your code because bullet provides third party libraries in the examples, which might overwrite packages that you have, for example I had a glfw project that used glad, and in the examples it also provided an instance of glad, but I got an error saying it that the gladLoader function call was undefined.</p>
 <p>Moreover, there is no reason to build examples or to do tests if your goal is to simply use bullet as a third party library as it unessesarily complicates the build and takes longer.</p>
-<p>At the moment when we run <code>add_submodule(external_libraries/bullet3/src)</code> it will recursively add any other directories that also contain <code>CMakeLists.txt</code> in them, and if you take a look at the code base you will find many such instances. Therefore an easy way to not build these cmake targets is by renaming the <code>CMakeLists.txt</code> to something like <code>ignore_CMakeLists.txt</code>, then go into the examples and test directory and do that to both <code>CMakeLists.txt</code> you encounter, when you build the library alongside your project you will not build the extraneous targets. </p>
+<p>At the moment when we run <code>add_submodule(external_libraries/bullet3/src)</code> it will recursively add any other directories that also contain <code>CMakeLists.txt</code> in them, and if you take a look at the code base you will find many such instances. Therefore an easy way to not build these cmake targets is by renaming the <code>CMakeLists.txt</code> to something like <code>ignore_CMakeLists.txt</code>, then go into the examples and test directory and do that to both <code>CMakeLists.txt</code> you encounter, when you build the library alongside your project you will not build the extraneous targets.</p>
+<p>Specifically if you're using the cmake file provided above, then you can do the following:</p>
+<ul>
+<li>To disable the building of examples rename <code>bullet3/examples/CMakeLists.txt</code> to <code>bullet3/examples/CMakeLists.txt_ignored</code></li>
+<li><p class="startli">To disable the building of tests rename <code>bullet3/test/CMakeLists.txt</code> to <code>bullet3/test/CMakeLists.txt_ignored</code></p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>This method of doing things is a little bit ad hoc, maybe we can find a better way of doing it by changing the cmake file instead. If anyone has any ideas let us know</dd></dl>
+</li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

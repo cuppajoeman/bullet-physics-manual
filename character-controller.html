@@ -113,12 +113,26 @@ Kinematic</h2>
 <p>This type of character controller can be good for a player that might make impossible movements such as turning corners incredibly fast and so on.</p>
 <h1><a class="anchor" id="btKinematicCharacterController"></a>
 btKinematicCharacterController</h1>
-<p>To understand what a kinematic character controller is, let's first</p>
+<h2><a class="anchor" id="how-to-fix"></a>
+How To Fix</h2>
+<p>As we mentioned previously the kinematic controller is not in a good state, see some of the current issues:</p>
+<p>relevant issues:</p><ul>
+<li><a href="https://github.com/bulletphysics/bullet3/issues/4329">https://github.com/bulletphysics/bullet3/issues/4329</a></li>
+<li><a href="https://github.com/bulletphysics/bullet3/discussions/3523">https://github.com/bulletphysics/bullet3/discussions/3523</a></li>
+<li><a href="https://github.com/bulletphysics/bullet3/issues/84">https://github.com/bulletphysics/bullet3/issues/84</a></li>
+<li><a href="https://github.com/bulletphysics/bullet3/issues/40">https://github.com/bulletphysics/bullet3/issues/40</a></li>
+</ul>
+<p>In order to fix this class I recommend to first watch this video which should give you a basic understanding of what we have to do: <a href="https://youtu.be/s-99Z_W8bcQ">https://youtu.be/s-99Z_W8bcQ</a>, after that we can use godot's source code as a general guide line on what methods we'll need <a href="https://youtu.be/s-99Z_W8bcQ">https://youtu.be/s-99Z_W8bcQ</a></p>
 <h1><a class="anchor" id="a-simple-character-controller"></a>
 A Simple Character Controller</h1>
+<p>Until the kinematic character controller is supported again, we can create a dynamic character controller, the general outline for this will be to create a capsule shape object, make sure it's unable to fall over (like a tic tac placed on a table), and then apply forces to it.</p>
 <p>resources:</p><ul>
 <li><a href="https://www.reddit.com/r/gamedev/comments/2og487/bullet_physics_player_controller_than_can_be/">https://www.reddit.com/r/gamedev/comments/2og487/bullet_physics_player_controller_than_can_be/</a></li>
-<li><a href="https://github.com/bulletphysics/bullet3/issues/1387">https://github.com/bulletphysics/bullet3/issues/1387</a> </li>
+<li><a href="https://github.com/bulletphysics/bullet3/issues/1387">https://github.com/bulletphysics/bullet3/issues/1387</a></li>
+<li><a href="https://github.com/Lumak/Urho3D-KinematicCharacterController/blob/master/Source/Samples/82_KinematicPlatform/KinematicCharacterController.cpp">https://github.com/Lumak/Urho3D-KinematicCharacterController/blob/master/Source/Samples/82_KinematicPlatform/KinematicCharacterController.cpp</a></li>
+<li><a href="#" onclick="location.href='mai'+'lto:'+'git'+'@g'+'ith'+'ub'+'.co'+'m'; return false;">git@g<span class="obfuscator">.nosp@m.</span>ithu<span class="obfuscator">.nosp@m.</span>b.com</a>:godotengine/godot.git (find the kinematic character controller)</li>
+<li><a href="https://docs.godotengine.org/en/stable/classes/class_characterbody3d.html">https://docs.godotengine.org/en/stable/classes/class_characterbody3d.html</a></li>
+<li></li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
