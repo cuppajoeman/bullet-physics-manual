@@ -25,6 +25,8 @@ Alternatively you might want to use Bullet as a library in your own programs, fo
 
 Start in an empty directory and create the directory `external_libraries` or something along those lines, inside of this directory add bullet as a submodule, if you're not yet familiar with how submodules work, to sum it up they allow you to add another directories as versioned packages and git will not store the files directly. If you don't want to use submodules now, just clone the project here.
 
+Note that `bal.cpp` is using https://github.com/bulletphysics/bullet3/blob/master/examples/HelloWorld/HelloWorld.cpp as it's source code.
+
 For simplicity we will assume you are running linux and using cmake, in this case we just have to set up the following CMakeLists.txt file like so:
 
 \code
