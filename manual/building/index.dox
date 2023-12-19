@@ -46,7 +46,9 @@ This won't be a tutorial on how cmake works, but we'll mention a few things:
 2. tells cmake to also build bullet when we build this directory
 3. tells the linker to link the following cmake targets against our project
 
-If you're curious about how I knew what the names were for those libraries, look at the structure of the src file in Bullet, you'll find directories with similar names, each of which contain a `CMakeLists.txt` file and inside you'll find a line like this `ADD_LIBRARY(BulletDynamics ${BulletDynamics_SRCS} ${BulletDynamics_HDRS})` which defines that as a cmake target for us to reference later on. Also note that the order matters for some reason, [TODO: put reason it matters here], I believe it has to do with this: https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc
+If you're curious about how I knew what the names were for those libraries, look at the structure of the src file in Bullet, you'll find directories with similar names, each of which contain a `CMakeLists.txt` file and inside you'll find a line like this `ADD_LIBRARY(BulletDynamics ${BulletDynamics_SRCS} ${BulletDynamics_HDRS})` which defines that as a cmake target for us to reference later on. Also note that the order matters for some reason.
+
+\todo I believe it has to do with this: https://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc, but when we know the real reason add the explanation to the end of this paragraph.
 
 With that set up, you can now move on to the basics section, in the root of your project dir you can now run `cmake -S . -B build` and `cmake --build build` to compile your code.
 
