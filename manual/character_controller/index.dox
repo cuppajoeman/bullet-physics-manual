@@ -1,36 +1,37 @@
 /** \page character-controller Character Controller
 
-A character controller is a physics object, which doesn' interact with other objects in the same ways that others do and can be controller by a user. A good example of a character controller is the one shown in this reddit post: https://www.reddit.com/r/Unity3D/comments/738lyj/finished_my_ideal_character_controller_after_2/
+A character controller is a physics object, which is designed to be able to be moved using human or computer inputs.
+
+\subsection current-status Current Status
 
 When you first start researching character controllers with bullet you'll probably initially be bombarded by many people asking how to build one, additionally if you start reading into these articles you'll start piecing together an image of the state of the character controller in bullet, needless to say it's not in the best state.
 
 - btKinematicCharacterController (<a href="https://github.com/bulletphysics/bullet3/issues/167#issuecomment-566853354">No longer supported</a>)
 
-While it makese sense for a physics engine to be good a just physics, it would be great to have a basic character controller working in bullet physics. If you're up for the task feel free to open an issue about this and get some feedback.
-
 \section kinematic-vs-dynamic Kinematics vs Dynamic
+
+When it comes to character controllers there are two main types:
 
 \subsection dynamic Dynamic
 
-A dynamic character controller is thought of as a rigid body with an infinite intertia tensor, that is to say it's a rigid body but unable to rotate. This allows the body to interact with the phsics engine regularly, though these interactions may not always be predictable.
+A dynamic character controller is thought of as a rigid body but unable to rotate around it's origin. This allows the body to interact with the phsics engine regularly, though these interactions may not always be predictable.
 
-This type of controller doesn't have direct control over the bodies position, as it's position changes through impulses or forces, so if you need to move your character controller to a specific location, you may find it hard to accurately move it there through this "2nd order control".
+This type of controller doesn't have direct control over the bodies position, as it's position changes through impulses or forces. An easy way to remember this type of controller is that it's just a regular physics entity with some custom behavior. 
 
-Additionally there will be situations that come to mind where you have to modify the default behavior of the object, for example if we've modelled a stair set using a wedge, and the player attempts to climb up this wedge, since our character is just a regular physics object, they would start sliding down the wedge
+There are a few things to keep in mind with this type of controller:
+- It may be difficult move your character controller to a specific location as you can only interact with it through forces
+- To make it act like a "character", there will be situations where we have to hack in custom behavior to the object
+	 - For example if we've modelled a stair set using a wedge, and the player attempts to climb up this wedge, since our character is just a regular physics object, they would start sliding down the wedge
 
 The general summary of this is that to to create a dynamic character controller, you have to take a regular physics object and tweak it's behavior and disable features until it behaves as desired.
 
 \subsection kinematic Kinematic
 
-On the other hand a kinematic controller is one that cannot directly interact with physics objects unless it is written explicitly in the code. 
+On the other hand a kinematic controller is one that cannot directly interact with physics objects unless it is written explicitly in the code. In order to make it actually interact with the physics world we need to define custom behavior so that if it starts intersecting a wall it is moved out of that state, or if it hits a ramp we move up the ramp instead of getting stuck.
 
-read more here: https://docs.nvidia.com/gameworks/content/gameworkslibrary/physx/guide/3.3.4/Manual/CharacterControllers.html
-
-This type of character controller can be good for a player that might make impossible movements such as turning corners incredibly fast and so on.
+This type of character controller can be good for a player that might make impossible movements such as turning corners incredibly fast and so on. To some extend character controllers are game dependent, but I believe having a solid capsule based kinematic character in bullet should be available.
 
 \section btKinematicCharacterController btKinematicCharacterController 
-
-\subsection how-to-fix How To Fix
 
 As we mentioned previously the kinematic controller is not in a good state, see some of the current issues:
 
@@ -40,7 +41,7 @@ relevant issues:
 - https://github.com/bulletphysics/bullet3/issues/84
 - https://github.com/bulletphysics/bullet3/issues/40
 
-In order to fix this class I recommend to first watch this video which should give you a basic understanding of what we have to do: https://youtu.be/s-99Z_W8bcQ, after that we can use godot's source code as a general guide line on what methods we'll need https://youtu.be/s-99Z_W8bcQ
+To help develop this class I recommend to first watch this video which should give you a basic understanding of what we have to do: https://youtu.be/s-99Z_W8bcQ, after that we can use godot's source code as a general guide line on what methods we'll need https://youtu.be/s-99Z_W8bcQ
 
 \section a-simple-character-controller A Simple Character Controller
 
@@ -52,7 +53,9 @@ resources:
 - https://github.com/Lumak/Urho3D-KinematicCharacterController/blob/master/Source/Samples/82_KinematicPlatform/KinematicCharacterController.cpp
 - git@github.com:godotengine/godot.git (find the kinematic character controller)
 - https://docs.godotengine.org/en/stable/classes/class_characterbody3d.html
-- 
+- https://stackoverflow.com/questions/25605659/avoid-ground-collision-with-bullet/25725502#25725502 
+- https://stackoverflow.com/questions/18345710/how-do-you-control-a-player-character-in-bullet-physics
+- https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=11927
 
 
 */

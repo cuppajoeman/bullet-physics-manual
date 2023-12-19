@@ -1,0 +1,31 @@
+/** \page Contributing
+
+\section documentation Documentation
+
+This documentation was generated using doxygen, it's a tool that can generate documentation automatically from source files as well as being able to create documentation manually. 
+
+This is a great tool for projects where you want to encourage your users to contribute as it allows them to see the source code and reference it directly. Additionally it is not bound to any specific service, so your documentation is not dependent on a certain platform and can be relocated easily.
+
+Writing documentation is simple once you know how, to start familiarize yourself with <a href="https://www.doxygen.nl/">doxygen</a>.
+
+\section repository-structure Repository Structure
+
+- Extras: A directory to store extra tools that aren't required but can be useful to bullet
+- data: A directory where 3d assets are stored for use in examples 
+- docs: Bullet's assorted documentation files
+- build3: \todo I'm not really sure what this is for but it seems to contain build files
+- examples: Contains the example browser along with all the examples that it uses
+- src: the source code of bullet
+- test: tests for the bullet physics library
+
+\section source-code Source Code
+
+If you've never worked with c++, then I recommend grabbing a copy of c++ primer and using it as a reference, from there you can try and build a simple hello world program. This book will also help you understand the conceptual information you'll need when using libraries with your projects.
+
+To get started, the source code is located in the src directory in the repository, this is standard practice as the top level directory may contain other things such as documentation, scripts and metadata.
+
+Erwin Coumans and John McCutchan created a sytle document here: https://docs.google.com/document/d/1u9vyzPtrVoVhYqQOGNWUgjRbfwfCdIts_NzmvgiJ144/edit
+
+, if this is your first time working with a physics engine I recommend watching this video to learn some of the basics: https://www.youtube.com/watch?v=-_IspRG548E
+
+*/

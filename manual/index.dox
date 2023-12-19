@@ -1,11 +1,37 @@
 /** \mainpage Manual
 
-Welcome to the bullet physics engine, it is an open source physics engine available on windows, mac and linux.
+Bullet Physics is a professional open source collision detection, rigid body and soft body dynamics library written in portable C++. The library is primarily designed for use in games, visual effects and robotic simulation. The library is free for commercial use under the ZLib license and available on windows, mac and linux.
 
-, if this is your first time working with a physics engine I recommend watching this video to learn some of the basics: https://www.youtube.com/watch?v=-_IspRG548E
+\section main-features Main Features
 
-This documentation is currently a work in progress, the PhysX library is a bit ahead in that regard, so feel free to check out their documentation here as it may help you understand what's going on with the bullet physics engine
+- Discrete and continuous collision detection including ray and convex sweep test. Collision
+shapes include concave and convex meshes and all basic primitives
+
+- Maximal coordinate 6-degree of freedom rigid bodies (btRigidBody) connected by
+constraints (btTypedConstraint) as well as generalized coordinate multi-bodies
+(btMultiBody) connected by mobilizers using the articulated body algorithm.
+
+- Fast and stable rigid body dynamics constraint solver, vehicle dynamics, character
+controller and slider, hinge, generic 6DOF and cone twist constraint for ragdolls
+
+- Soft Body dynamics for cloth, rope and deformable volumes with two-way interaction with
+rigid bodies, including constraint support
+
+- Open source C++ code under Zlib license and free for any commercial use on all platforms
+including PLAYSTATION 3, XBox 360, Wii, PC, Linux, Mac OSX, Android and iPhone
+
+- Maya Dynamica plugin, Blender integration, native binary .bullet serialization and
+examples how to import URDF, Wavefront .obj and Quake .bsp files.
+
+- Many examples showing how to use the SDK. All examples are easy to browse in the
+OpenGL 3 example browser. Each example can also be compiled without graphics.
+
+\section getting-started Getting Started
+
+Based on your goals with bullet, check out one of the corresponding sections
 
 - \subpage Building 
 - \subpage Basics
+- \subpage Contributing
+
 */
