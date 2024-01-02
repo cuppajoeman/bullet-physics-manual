@@ -1,5 +1,8 @@
 /** \page Basics
 
+\todo use the following resources to improve this article
+- https://web.archive.org/web/20231114123421/https://andysomogyi.github.io/mechanica/bullet.html
+
 <h1>basics</h1>
 
 <h2>expected knowledge</h2>
@@ -275,5 +278,10 @@ int main(int argc, char** argv)
 <p>
     On the next lines we can see how bullet deals with time through the <code>stepSimulation(...)</code> function call
 </p>
+
+\section terminology Terminology
+
+- pair cache, an instance of a pair cache represents a pair of objects that were found overlapping in the broadphase collision detection phase.
+
 
 */
