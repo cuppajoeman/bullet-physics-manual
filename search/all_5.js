@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['files_0',['Obj Files',['../static_map.html#obj_files',1,'']]],
-  ['fix_1',['How To Fix',['../character-controller.html#how-to-fix',1,'']]]
+  ['features_0',['Main Features',['../index.html#main-features',1,'']]],
+  ['files_1',['Files',['../static_map.html#obj_files',1,'Obj Files'],['../todo.html#_todo000006',1,'Obj Files'],['../todo.html#_todo000007',1,'Obj Files']]]
 ];

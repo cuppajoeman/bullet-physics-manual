@@ -28,18 +28,20 @@ var NAVTREE =
     [ "Manual", "index.html", "index" ],
     [ "Character Controller", "character-controller.html", [
       [ "Kinematics vs Dynamic", "character-controller.html#kinematic-vs-dynamic", [
+        [ "Current Status", "character-controller.html#current-status", null ],
         [ "Dynamic", "character-controller.html#dynamic", null ]
       ] ],
       [ "Kinematic", "character-controller.html#kinematic", null ],
-      [ "btKinematicCharacterController", "character-controller.html#btKinematicCharacterController", [
-        [ "How To Fix", "character-controller.html#how-to-fix", null ]
-      ] ],
-      [ "A Simple Character Controller", "character-controller.html#a-simple-character-controller", null ]
+      [ "btKinematicCharacterController", "character-controller.html#btKinematicCharacterController", null ],
+      [ "Introduction", "character-controller.html#introduction", [
+        [ "Usage", "character-controller.html#usage", null ],
+        [ "Architecture", "character-controller.html#architecture", null ]
+      ] ]
     ] ],
     [ "Collision Shapes", "collision_shapes.html", [
-      [ "Introduction", "collision_shapes.html#introduction", null ],
       [ "Drawing", "collision_shapes.html#drawing", null ]
     ] ],
+    [ "Collision Detection", "collision-detection.html", null ],
     [ "Examples", "Examples.html", [
       [ "Basic Example", "Examples.html#basic-example", null ],
       [ "Example Browser", "Examples.html#example-browser", [
@@ -57,6 +59,7 @@ var NAVTREE =
       [ "Serialize", "Extras.html#serialize", null ],
       [ "World Importer", "Extras.html#world-importer", null ]
     ] ],
+    [ "glm", "glm.html", null ],
     [ "OpenGL", "Integrating.html", [
       [ "Debug Graphics", "Integrating.html#debug-graphics", null ]
     ] ],
@@ -70,6 +73,7 @@ var NAVTREE =
         [ "Obj Files", "static_map.html#obj_files", null ]
       ] ]
     ] ],
+    [ "Unsorted", "Unsorted.html", null ],
     [ "Todo List", "todo.html", null ]
   ] ]
 ];

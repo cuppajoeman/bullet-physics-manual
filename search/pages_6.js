@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['shapes_0',['Collision Shapes',['../collision_shapes.html',1,'']]],
-  ['static_20map_1',['Static Map',['../static_map.html',1,'']]]
+  ['manual_0',['Manual',['../index.html',1,'']]],
+  ['map_1',['Static Map',['../static_map.html',1,'']]]
 ];
